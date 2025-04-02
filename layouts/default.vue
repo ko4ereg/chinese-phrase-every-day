@@ -26,11 +26,15 @@
 }
 
 header {
-  background-color: rgba(214, 209, 199, 1);
+  position: absolute;
+  width: 100%;
+
+  background-color: transparent;
   padding: 15px;
   display: flex;
   gap: 10px;
   .link {
+    z-index: 3;
     @include linkButton;
   }
 }
@@ -79,6 +83,13 @@ header {
     100% {
       transform: scale(1), rotateZ(5deg);
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .poster {
+    height: auto;
+    font-size: 0.7rem;
   }
 }
 </style>

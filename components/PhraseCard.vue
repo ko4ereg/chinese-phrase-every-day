@@ -8,13 +8,17 @@ const phrases = ref([]);
 const phrase = ref({});
 const {} = useDisplay();
 
+const shuffleArray = (array) => {
+  return array.sort(() => Math.random() - 0.5);
+};
+
 const getPhrases = async () => {
   error.value = false;
   loading.value = true;
   try {
     const querySnapshot = await getDocs(collection($db, "phrases"));
     if (querySnapshot) {
-      phrases.value = querySnapshot.docs.map((doc) => doc.data());
+      phrases.value = shuffleArray(querySnapshot.docs.map((doc) => doc.data()));
     }
   } catch (err) {
     error.value = true;
@@ -26,18 +30,22 @@ const getPhrases = async () => {
 
 const { mobile } = useDisplay();
 
-const getRandomPhrase = () => {
-  if (phrases.value.length === 0) {
-    return {};
-  }
-  return phrases.value[Math.floor(Math.random() * phrases.value.length)];
-};
-
+const phraseIndex = ref(0);
 const nextPhrase = async () => {
   if (phrases.value.length == 0) {
     await getPhrases();
+    phraseIndex.value = 0;
+  } else {
+    phraseIndex.value = (phraseIndex.value + 1) % phrases.value.length; // Обновляем индекс до присваивания
   }
-  phrase.value = getRandomPhrase();
+  phrase.value = phrases.value[phraseIndex.value];
+};
+
+const prevPhrase = () => {
+  if (phraseIndex.value > 0) {
+    phraseIndex.value--;
+    phrase.value = phrases.value[phraseIndex.value];
+  }
 };
 
 const speakPhrase = (text) => {
@@ -65,6 +73,9 @@ const speakPhrase = (text) => {
 onMounted(async () => {
   await getPhrases();
   nextPhrase();
+  document.getElementById("speakButton").addEventListener("click", () => {
+    speakPhrase(phrase.value.chinese); 
+  });
 });
 const loading = ref(false);
 
@@ -75,7 +86,7 @@ const errorMessage = ref("");
 
 <template>
   <v-container class="d-flex align-center justify-center flex-column ga-2">
-    <v-card-title style="font-size: 1.5rem; letter-spacing: 2px"
+    <v-card-title style="font-size: 1.5rem; letter-spacing: 2px; z-index: 2"
       >🏮 Учить фразу 🏮</v-card-title
     >
     <v-card
@@ -104,11 +115,23 @@ const errorMessage = ref("");
         </template>
       </template>
     </v-card>
-    <div>
+    <div class="buttons">
       <v-btn color="primary" @click="nextPhrase">Следующая фраза</v-btn>
-      <v-btn color="secondary" @click="speakPhrase(phrase.chinese)" class="ml-2"
+      <v-btn
+        id="speakButton"
+        color="secondary"
+        @click="speakPhrase(phrase.chinese)"
+        class="ml-2"
         >Произносить!</v-btn
       >
+      <v-btn
+        v-if="phraseIndex > 0"
+        color="primary"
+        @click="prevPhrase"
+        :disabled="phraseIndex <= 0"
+      >
+        Назад
+      </v-btn>
     </div>
   </v-container>
 
@@ -151,10 +174,39 @@ const errorMessage = ref("");
   }
 }
 
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .v-btn {
+    width: max-content;
+  }
+}
+
 @media (max-width: 1023px) {
   .v-card {
     background: center center / cover url("@/assets/images/background.jpg")
       no-repeat scroll;
+
+    .v-card-text {
+      .chinese-text {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .pinyin {
+        padding: 0.2rem;
+        justify-self: center;
+        font-size: 1rem;
+        color: #777;
+      }
+      .translation {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .buttons {
+    flex-direction: column;
   }
 }
 </style>
