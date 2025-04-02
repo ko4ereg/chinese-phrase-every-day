@@ -1,4 +1,8 @@
-<script></script>
+<script>
+useSeoMeta({
+  title: "Китайские фразы на каждый день!",
+});
+</script>
 
 <template>
   <PhraseCard />

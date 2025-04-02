@@ -2,6 +2,10 @@
 definePageMeta({
   layout: "not-main",
 });
+
+useSeoMeta({
+  title: "О нас",
+});
 </script>
 <template>
   <v-card width="90%">

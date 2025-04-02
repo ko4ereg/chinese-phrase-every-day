@@ -1,8 +1,18 @@
 <script setup>
-import { collection, addDoc, doc, setDoc, query, where, getDoc } from "firebase/firestore";
+import {
+ 
+  doc,
+  setDoc,
+ 
+  getDoc,
+} from "firebase/firestore";
 
 definePageMeta({
   layout: "not-main",
+});
+
+useSeoMeta({
+  title: "Создать фразу",
 });
 
 const { $db } = useNuxtApp();

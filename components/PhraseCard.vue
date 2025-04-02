@@ -19,6 +19,8 @@ const getPhrases = async () => {
     const querySnapshot = await getDocs(collection($db, "phrases"));
     if (querySnapshot) {
       phrases.value = shuffleArray(querySnapshot.docs.map((doc) => doc.data()));
+      phraseIndex.value = 0;
+      phrase.value = phrases.value[phraseIndex.value];
     }
   } catch (err) {
     error.value = true;
@@ -34,11 +36,10 @@ const phraseIndex = ref(0);
 const nextPhrase = async () => {
   if (phrases.value.length == 0) {
     await getPhrases();
-    phraseIndex.value = 0;
   } else {
-    phraseIndex.value = (phraseIndex.value + 1) % phrases.value.length; // Обновляем индекс до присваивания
+    phraseIndex.value = (phraseIndex.value + 1) % phrases.value.length;
+    phrase.value = phrases.value[phraseIndex.value]; // Обновляем индекс до присваивания
   }
-  phrase.value = phrases.value[phraseIndex.value];
 };
 
 const prevPhrase = () => {
@@ -72,9 +73,9 @@ const speakPhrase = (text) => {
 
 onMounted(async () => {
   await getPhrases();
-  nextPhrase();
+
   document.getElementById("speakButton").addEventListener("click", () => {
-    speakPhrase(phrase.value.chinese); 
+    speakPhrase(phrase.value.chinese);
   });
 });
 const loading = ref(false);
