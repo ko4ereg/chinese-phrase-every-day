@@ -1,0 +1,31 @@
+@mixin linkButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 133px;
+  height: 44px;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  border-radius: 15px;
+  background-color: #f9cb1e;
+  background-position: center center;
+  border-color: transparent;
+  border-style: solid;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: #c7a116;
+      color: red;
+    }
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    &:active {
+      background-color: #c7a116;
+      color: red;
+    }
+  }
+}

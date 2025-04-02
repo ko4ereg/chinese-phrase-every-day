@@ -1,0 +1,35 @@
+@use "mixins" as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Literata", sans-serif;
+}
+
+html,
+body,
+#__nuxt {
+  width: 100%;
+  height: 100dvh;
+}
+
+input,
+textarea,
+select {
+  outline: none;
+}
+input,
+textarea,
+select,
+button {
+  background: transparent;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  &:visited {
+    color: blue;
+  }
+}
