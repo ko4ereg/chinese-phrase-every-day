@@ -19,7 +19,7 @@ const { $db } = useNuxtApp();
 const phrases = ref([]);
 const phrase = ref({});
 const {} = useDisplay();
-
+const config = useRuntimeConfig();
 const shuffleArray = (array) => {
   return array.sort(() => Math.random() - 0.5);
 };
