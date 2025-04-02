@@ -79,9 +79,9 @@ const errorMessage = ref("");
       >🏮 Учить фразу 🏮</v-card-title
     >
     <v-card
-      min-height="200"
+      min-height="300"
       rounded="l"
-      :width="mobile ? '90%' : '500px'"
+      :width="mobile ? '90%' : '600px'"
       class="pa-5 text-center d-flex align-center justify-center"
       elevation="4"
     >
@@ -128,6 +128,7 @@ const errorMessage = ref("");
   background: url("@/assets/images/background.jpg");
 
   .v-card-text {
+    border-radius: 15px;
     background-color: rgba(0, 0, 0, 0.15);
     -webkit-box-shadow: 0px 8px 37px 14px rgba(66, 68, 90, 1);
     -moz-box-shadow: 0px 8px 37px 14px rgba(66, 68, 90, 1);
@@ -147,6 +148,13 @@ const errorMessage = ref("");
       font-size: 1.5rem;
       margin-bottom: 10px;
     }
+  }
+}
+
+@media (max-width: 1023px) {
+  .v-card {
+    background: center center / cover url("@/assets/images/background.jpg")
+      no-repeat scroll;
   }
 }
 </style>

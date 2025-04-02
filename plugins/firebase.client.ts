@@ -4,13 +4,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 export default defineNuxtPlugin(() => {
+  const config = useRuntimeConfig();
   const firebaseConfig = {
-    apiKey: import.meta.env.API_KEY,
-    authDomain: import.meta.env.AUTH_DOMAIN,
-    projectId: import.meta.env.PROJECT_ID,
-    storageBucket: import.meta.env.STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.MESSAGING_SENDER_ID,
-    appId: import.meta.env.APP_ID,
+    apiKey: config.public.API_KEY,
+    authDomain: config.public.AUTH_DOMAIN,
+    projectId: config.public.PROJECT_ID,
+    storageBucket: config.public.STORAGE_BUCKET,
+    messagingSenderId: config.public.MESSAGING_SENDER_ID,
+    appId: config.public.APP_ID,
   };
 
   const app = initializeApp(firebaseConfig);
