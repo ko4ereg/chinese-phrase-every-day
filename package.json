@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@nuxt/fonts": "^0.11.0",
+    "@nuxt/scripts": "^0.11.5",
     "sass-embedded": "^1.86.1",
     "vuetify-nuxt-module": "^0.18.5"
   }

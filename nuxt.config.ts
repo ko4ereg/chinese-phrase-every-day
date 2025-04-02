@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ["@nuxt/fonts", "vuetify-nuxt-module"],
+  modules: ["@nuxt/fonts", "vuetify-nuxt-module", "@nuxt/scripts"],
   fonts: { families: [{ name: "literata", provider: "google" }] },
   css: ["~/assets/scss/global.scss"],
   vite: {

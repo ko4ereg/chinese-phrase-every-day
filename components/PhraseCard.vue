@@ -3,6 +3,18 @@ import { ref } from "vue";
 import { useDisplay } from "vuetify";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
+//const {} = useScript(
+//  "https://code.responsivevoice.org/responsivevoice.js?key=W7GmhwFg"
+//);
+
+const { onLoaded, status } = useScript({
+  src: `https://code.responsivevoice.org/responsivevoice.js?key=${config.public.VOICE_KEY}`,
+});
+watch(status, (newStatus) => {
+  if (newStatus === "ready") {
+    console.log("ResponsiveVoice загружен и готов к использованию");
+  }
+});
 const { $db } = useNuxtApp();
 const phrases = ref([]);
 const phrase = ref({});
@@ -50,25 +62,26 @@ const prevPhrase = () => {
 };
 
 const speakPhrase = (text) => {
-  if (!window.speechSynthesis) {
-    console.error("Speech synthesis не поддерживается");
-    return;
-  }
+  window.responsiveVoice.speak(text, "Chinese Female", { rate: 1 });
+  //  if (!window.speechSynthesis) {
+  //    console.error("Speech synthesis не поддерживается");
+  //    return;
+  //  }
 
-  window.speechSynthesis.cancel(); //На всякий случай стопаем предыдущий голос
+  //  window.speechSynthesis.cancel(); //На всякий случай стопаем предыдущий голос
 
-  const voices = window.speechSynthesis.getVoices();
-  const chineseVoice = voices.find((voice) => voice.lang.includes("zh"));
+  //  const voices = window.speechSynthesis.getVoices();
+  //  const chineseVoice = voices.find((voice) => voice.lang.includes("zh"));
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = chineseVoice || voices[0]; // Если китайского голоса нет, используем первый доступный
-  utterance.lang = "zh-CN";
+  //  const utterance = new SpeechSynthesisUtterance(text);
+  //  utterance.voice = chineseVoice || voices[0]; // Если китайского голоса нет, используем первый доступный
+  //  utterance.lang = "zh-CN";
 
-  if (voices.length === 0) {
-    setTimeout(() => window.speechSynthesis.speak(utterance), 500); //Задержка если голос не подгрузился
-  } else {
-    window.speechSynthesis.speak(utterance);
-  }
+  //  if (voices.length === 0) {
+  //    setTimeout(() => window.speechSynthesis.speak(utterance), 500); //Задержка если голос не подгрузился
+  //  } else {
+  //    window.speechSynthesis.speak(utterance);
+  //  }
 };
 
 onMounted(async () => {
@@ -86,6 +99,8 @@ const errorMessage = ref("");
 </script>
 
 <template>
+  {{ onLoaded }}
+  {{ status }}
   <v-container class="d-flex align-center justify-center flex-column ga-2">
     <v-card-title style="font-size: 1.5rem; letter-spacing: 2px; z-index: 2"
       >🏮 Учить фразу 🏮</v-card-title
@@ -117,7 +132,12 @@ const errorMessage = ref("");
       </template>
     </v-card>
     <div class="buttons">
-      <v-btn color="primary" @click="nextPhrase">Следующая фраза</v-btn>
+      <v-btn
+        v-if="phraseIndex !== phrases.length - 1"
+        color="primary"
+        @click="nextPhrase"
+        >Следующая фраза</v-btn
+      >
       <v-btn
         id="speakButton"
         color="secondary"
