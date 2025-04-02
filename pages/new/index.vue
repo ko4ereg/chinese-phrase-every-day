@@ -1,11 +1,5 @@
 <script setup>
-import {
- 
-  doc,
-  setDoc,
- 
-  getDoc,
-} from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 definePageMeta({
   layout: "not-main",
