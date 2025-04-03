@@ -66,7 +66,7 @@ const nextPhrase = async () => {
     await getPhrases();
   } else {
     phraseIndex.value = (phraseIndex.value + 1) % phrases.value.length;
-    phrase.value = phrases.value[phraseIndex.value];  
+    phrase.value = phrases.value[phraseIndex.value];
   }
 };
 
@@ -182,16 +182,7 @@ const errorMessage = ref("");
       </v-btn>
     </div>
 
-    <div
-      v-if="!hasChineseTTS"
-      style="
-        max-width: 90%;
-        text-align: justify;
-        font-size: 1.5rem;
-        letter-spacing: 2px;
-        z-index: 2;
-      "
-    >
+    <div v-if="!hasChineseTTS" class="hasNoTTS">
       Грустить! Ваш браузер не поддерживает синтезатор китайской речи :(
       Смотреть произношение в словаре!
     </div>
@@ -235,7 +226,13 @@ const errorMessage = ref("");
     }
   }
 }
-
+.hasNoTTS {
+  max-width: 90%;
+        text-align: justify;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        z-index: 2;
+}
 .buttons {
   display: flex;
   align-items: center;
@@ -269,6 +266,10 @@ const errorMessage = ref("");
   }
   .buttons {
     flex-direction: column;
+  }
+
+  .hasNoTTS {
+    font-size: 1rem;
   }
 }
 </style>
