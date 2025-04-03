@@ -125,7 +125,7 @@ const errorMessage = ref("");
         >Следующая фраза</v-btn
       >
       <v-btn
-        v-if="!mobile"
+        
         id="speakButton"
         color="secondary"
         @click="speakPhrase(phrase.chinese)"
