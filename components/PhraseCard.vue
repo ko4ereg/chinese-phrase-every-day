@@ -18,6 +18,11 @@ const getPhrases = async () => {
   try {
     const querySnapshot = await getDocs(collection($db, "phrases"));
     if (querySnapshot) {
+      if (querySnapshot.docs.length === 0) {
+        error.value = true;
+        errorMessage.value = "Нет доступных фраз";
+        return;
+      }
       phrases.value = shuffleArray(querySnapshot.docs.map((doc) => doc.data()));
       phraseIndex.value = 0;
       phrase.value = phrases.value[phraseIndex.value];
@@ -119,14 +124,21 @@ const errorMessage = ref("");
         @click="nextPhrase"
         >Следующая фраза</v-btn
       >
-      <v-btn 
-	  v-if="!mobile"
+      <v-btn
+        v-if="!mobile"
         id="speakButton"
         color="secondary"
         @click="speakPhrase(phrase.chinese)"
         class="ml-2"
         >Произносить!</v-btn
       >
+      <a
+        v-if="mobile"
+        :href="`https://www.dong-chinese.com/dictionary/search/${phrase.chinese}`"
+        target="_blank"
+      >
+        <v-btn class="ml-2" color="secondary">Узнавать звук в словаре</v-btn>
+      </a>
       <v-btn
         v-if="phraseIndex > 0"
         color="primary"
