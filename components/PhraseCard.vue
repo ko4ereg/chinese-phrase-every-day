@@ -12,6 +12,29 @@ const shuffleArray = (array) => {
   return array.sort(() => Math.random() - 0.5);
 };
 
+const hasChineseTTS = ref(false);
+let intervalId = null;
+const failCount = ref(0);
+const checkChineseTTS = () => {
+  const synth = window.speechSynthesis;
+  if (!synth) {
+    hasChineseTTS.value = false;
+    return;
+  }
+
+  const voices = synth.getVoices();
+  hasChineseTTS.value = voices.some((voice) => voice.lang.includes("zh"));
+
+  if (hasChineseTTS.value) {
+    clearInterval(intervalId); // Если нашли китайский TTS, отключаем таймер
+  } else {
+    failCount.value++;
+    if (failCount.value >= 10) {
+      clearInterval(intervalId); // Если 10 раз подряд нет - останавливаем проверки
+    }
+  }
+};
+
 const getPhrases = async () => {
   error.value = false;
   loading.value = true;
@@ -43,7 +66,7 @@ const nextPhrase = async () => {
     await getPhrases();
   } else {
     phraseIndex.value = (phraseIndex.value + 1) % phrases.value.length;
-    phrase.value = phrases.value[phraseIndex.value]; // Обновляем индекс до присваивания
+    phrase.value = phrases.value[phraseIndex.value];  
   }
 };
 
@@ -63,6 +86,7 @@ const speakPhrase = (text) => {
   window.speechSynthesis.cancel(); //На всякий случай стопаем предыдущий голос
 
   const voices = window.speechSynthesis.getVoices();
+
   const chineseVoice = voices.find((voice) => voice.lang.includes("zh"));
 
   const utterance = new SpeechSynthesisUtterance(text);
@@ -78,7 +102,16 @@ const speakPhrase = (text) => {
 
 onMounted(async () => {
   await getPhrases();
+  checkChineseTTS();
+  intervalId = setInterval(checkChineseTTS, 2000);
 });
+
+onUnmounted(() => {
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+});
+
 const loading = ref(false);
 
 const error = ref(false);
@@ -125,7 +158,7 @@ const errorMessage = ref("");
         >Следующая фраза</v-btn
       >
       <v-btn
-        
+        v-if="hasChineseTTS"
         id="speakButton"
         color="secondary"
         @click="speakPhrase(phrase.chinese)"
@@ -133,7 +166,7 @@ const errorMessage = ref("");
         >Произносить!</v-btn
       >
       <a
-        v-if="mobile"
+        v-if="!hasChineseTTS"
         :href="`https://www.dong-chinese.com/dictionary/search/${phrase.chinese}`"
         target="_blank"
       >
@@ -147,6 +180,20 @@ const errorMessage = ref("");
       >
         Назад
       </v-btn>
+    </div>
+
+    <div
+      v-if="!hasChineseTTS"
+      style="
+        max-width: 90%;
+        text-align: justify;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        z-index: 2;
+      "
+    >
+      Грустить! Ваш браузер не поддерживает синтезатор китайской речи :(
+      Смотреть произношение в словаре!
     </div>
   </v-container>
 
