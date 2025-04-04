@@ -8,7 +8,7 @@
   </div>
 
   <header>
-    <NuxtLink to="/about"><div class="link">О нас</div></NuxtLink>
+    <NuxtLink to="/about"><div class="link">О проекте</div></NuxtLink>
     <NuxtLink to="/new"><div class="link">Создать фразу</div></NuxtLink>
   </header>
 

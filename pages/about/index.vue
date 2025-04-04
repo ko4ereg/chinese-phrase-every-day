@@ -4,7 +4,7 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "О нас",
+  title: "О проекте",
 });
 </script>
 <template>
@@ -18,6 +18,12 @@ useSeoMeta({
         <br />
         При рендере появляется рандомная фраза, а так же можно пополнять
         словарик своими!
+        <v-divider class="mt-2"></v-divider>
+        Используется Nuxt3, JS, Vuetify, Firebase
+        <br />
+        <v-divider class="mt-2"></v-divider>
+        由ko4ereg开发/Разработано ko4ereg
+        <a :href="`https://github.com/ko4ereg`" target="_blank">GitHub</a>
       </div>
     </v-card-text></v-card
   >
