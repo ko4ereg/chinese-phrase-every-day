@@ -27,7 +27,7 @@ const onSubmit = async () => {
   }
   try {
     //проверка на уникальность по иероглифам
-    const phraseRef = doc($db, "phrases", form.value.chinese);
+    const phraseRef = doc($db, "phrases", form.value.chinese.trim());
     const phraseSnap = await getDoc(phraseRef);
 
     if (phraseSnap.exists()) {
@@ -37,9 +37,9 @@ const onSubmit = async () => {
     }
 
     await setDoc(phraseRef, {
-      chinese: form.value.chinese,
-      pinyin: form.value.pinyin,
-      translation: form.value.translation,
+      chinese: form.value.chinese.trim(),
+      pinyin: form.value.pinyin.trim(),
+      translation: form.value.translation.trim(),
       createdAt: new Date(),
     });
 
