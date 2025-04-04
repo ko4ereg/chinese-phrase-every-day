@@ -9,6 +9,8 @@ useSeoMeta({
   title: "Создать фразу",
 });
 
+const loading = ref(false);
+
 const { $db } = useNuxtApp();
 const error = ref(false);
 const errorMessage = ref("");
@@ -25,6 +27,7 @@ const onSubmit = async () => {
     errorMessage.value = "Заполните все поля!";
     return;
   }
+  loading.value = true;
   try {
     //проверка на уникальность по иероглифам
     const phraseRef = doc($db, "phrases", form.value.chinese.trim());
@@ -50,6 +53,8 @@ const onSubmit = async () => {
     console.error("Ошибка при добавлении:", err);
     errorMessage.value = "Ошибка при добавлении!";
     error.value = true;
+  } finally {
+    loading.value = false;
   }
 };
 </script>
@@ -78,7 +83,7 @@ const onSubmit = async () => {
       type="text"
     />
 
-    <v-btn type="submit" variant="outlined">добавить</v-btn>
+    <v-btn type="submit" :loading="loading" variant="outlined">добавить</v-btn>
     <span v-if="formError">Пользователь существует</span>
   </v-form>
 
