@@ -1,5 +1,6 @@
 <template>
   <div class="background-noise"></div>
+  <div class="background-image"></div>
   <header>
     <NuxtLink to="/"> <div class="link">家 Дом</div></NuxtLink>
   </header>
@@ -20,14 +21,27 @@
 }
 
 header {
-  background-color: rgba(214, 209, 199, 1);
   padding: 15px;
-
+  position: absolute;
+  width: 100%;
+  display: flex;
+  gap: 10px;
   .link {
+    z-index: 3;
     @include linkButton;
   }
 }
+.background-image {
+  background: center center / cover url("@/assets/images/lanterns.png")
+    no-repeat scroll;
+  position: fixed;
 
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+  @include adaptiveBackground;
+}
 .background-noise {
   background: url("https://static.tildacdn.com/tild3265-3261-4333-a361-353739633737/noise.gif");
   background-size: 70px;

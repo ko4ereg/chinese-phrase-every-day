@@ -57,18 +57,21 @@ const onSubmit = async () => {
 <template>
   <v-form @submit.prevent="onSubmit" class="form">
     <v-text-field
+      bg-color="rgba(214, 209, 199, 1)"
       variant="outlined"
       v-model="form.chinese"
       placeholder="Иероглифы"
       type="text"
     />
     <v-text-field
+      bg-color="rgba(214, 209, 199, 1)"
       variant="outlined"
       v-model="form.pinyin"
       placeholder="Пиньин"
       type="text"
     />
     <v-text-field
+      bg-color="rgba(214, 209, 199, 1)"
       variant="outlined"
       v-model="form.translation"
       placeholder="Перевод"

@@ -1,5 +1,6 @@
 @mixin linkButton {
   display: flex;
+
   align-items: center;
   justify-content: center;
   width: 133px;
@@ -27,5 +28,37 @@
       background-color: #c7a116;
       color: red;
     }
+  }
+
+  @media (max-width: 767px) {
+    width: 91px;
+    height: 30px;
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: -1px;
+    font-size: 0.7rem;
+  }
+}
+
+@mixin adaptiveBackground {
+  @media (max-width: 1919px) {
+    background: left top / contain url("@/assets/images/lanterns1440.png")
+      no-repeat scroll;
+  }
+  @media (max-width: 1439px) {
+    background: 10% top / contain url("@/assets/images/lanterns1200.png")
+      no-repeat scroll;
+  }
+  @media (max-width: 1023px) {
+    background: center top / contain url("@/assets/images/lanterns1024.png")
+      no-repeat scroll;
+  }
+  @media (max-width: 767px) {
+    background: center top / contain url("@/assets/images/lanterns768.png")
+      no-repeat scroll;
+  }
+  @media (max-width: 575px) {
+    background: center top / contain url("@/assets/images/lanterns576.png")
+      no-repeat scroll;
   }
 }

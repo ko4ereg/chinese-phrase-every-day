@@ -1,9 +1,11 @@
 <template>
   <div class="background-noise"></div>
+  <div class="background-image"></div>
   <div class="poster" title="Великий Китай, слава тебе в веках!">
     <span>伟大的中国，</span>
     <span>荣耀万岁！</span>
   </div>
+
   <header>
     <NuxtLink to="/about"><div class="link">О нас</div></NuxtLink>
     <NuxtLink to="/new"><div class="link">Создать фразу</div></NuxtLink>
@@ -38,7 +40,16 @@ header {
     @include linkButton;
   }
 }
-
+.background-image {
+  background: center top / contain url("@/assets/images/lanterns1920.png")
+    no-repeat scroll;
+  position: fixed;
+  top: 0%;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  @include adaptiveBackground;
+}
 .background-noise {
   background: url("https://static.tildacdn.com/tild3265-3261-4333-a361-353739633737/noise.gif");
   background-size: 70px;
@@ -90,6 +101,13 @@ header {
   .poster {
     height: auto;
     font-size: 0.7rem;
+  }
+}
+@media (max-width: 424px) {
+  .poster {
+    height: auto;
+    font-size: 0.7rem;
+    top: 2%;
   }
 }
 </style>

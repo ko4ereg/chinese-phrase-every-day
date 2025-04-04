@@ -121,9 +121,7 @@ const errorMessage = ref("");
 
 <template>
   <v-container class="d-flex align-center justify-center flex-column ga-2">
-    <v-card-title style="font-size: 1.5rem; letter-spacing: 2px; z-index: 2"
-      >🏮 Учить фразу 🏮</v-card-title
-    >
+    <v-card-title>🏮 Учить фразу 🏮</v-card-title>
     <v-card
       min-height="300"
       rounded="l"
@@ -226,12 +224,18 @@ const errorMessage = ref("");
     }
   }
 }
+
+.v-card-title {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  z-index: 2;
+}
 .hasNoTTS {
   max-width: 90%;
-        text-align: justify;
-        font-size: 1.5rem;
-        letter-spacing: 2px;
-        z-index: 2;
+  text-align: justify;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  z-index: 2;
 }
 .buttons {
   display: flex;
@@ -243,6 +247,11 @@ const errorMessage = ref("");
 }
 
 @media (max-width: 1023px) {
+  .v-card-title {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    z-index: 2;
+  }
   .v-card {
     background: center center / cover url("@/assets/images/background.jpg")
       no-repeat scroll;
@@ -266,6 +275,9 @@ const errorMessage = ref("");
   }
   .buttons {
     flex-direction: column;
+    .v-btn {
+      height: 25px;
+    }
   }
 
   .hasNoTTS {
