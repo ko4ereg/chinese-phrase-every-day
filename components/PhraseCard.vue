@@ -12,7 +12,7 @@ const shuffleArray = (array) => {
   return array.sort(() => Math.random() - 0.5);
 };
 
-const hasChineseTTS = ref(false);
+const hasChineseTTS = ref(true);
 let intervalId = null;
 const failCount = ref(0);
 const checkChineseTTS = () => {

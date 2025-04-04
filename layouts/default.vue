@@ -1,6 +1,7 @@
 <template>
   <div class="background-noise"></div>
   <div class="background-image"></div>
+  <div class="background-bottom-image"></div>
   <div class="poster" title="Великий Китай, слава тебе в веках!">
     <span>伟大的中国，</span>
     <span>荣耀万岁！</span>
@@ -45,10 +46,20 @@ header {
     no-repeat scroll;
   position: fixed;
   top: 0%;
+
   height: 100%;
   width: 100%;
   pointer-events: none;
   @include adaptiveBackground;
+}
+.background-bottom-image {
+  background: right bottom / contain url("@/assets/images/bottom.png") no-repeat
+    scroll;
+  position: fixed;
+  top: 0%;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
 }
 .background-noise {
   background: url("https://static.tildacdn.com/tild3265-3261-4333-a361-353739633737/noise.gif");
@@ -80,7 +91,7 @@ header {
   z-index: 0;
   /* Неоновая пульсирующая граница */
   box-shadow: 0 0 30px 8px red;
-  animation: pulseRegular 2s ease 0s infinite normal forwards;
+  animation: pulseRegular 2s ease-out 0s infinite normal forwards;
 
   @keyframes pulseRegular {
     0% {

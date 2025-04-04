@@ -32,7 +32,7 @@ header {
   }
 }
 .background-image {
-  background: center center / cover url("@/assets/images/lanterns.png")
+	background: center top / contain url("@/assets/images/lanterns1920.png")
     no-repeat scroll;
   position: fixed;
 
